@@ -25,11 +25,15 @@ import {
   TextNode,
 } from 'lexical';
 import { HeadingNode } from "@lexical/rich-text"
+import { CodeNode } from '@lexical/code';
+import { LinkNode } from '@lexical/link';
+
 
 import Theme from './Theme';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 import { parseAllowedColor, parseAllowedFontSize } from './styleConfig';
 import { SyncPlugin } from './plugins/SyncPlugin';
+import { SlashCommandPlugin } from './plugins/SlashMenu/SlashMenuPlugin';
 
 const placeholder = 'Enter some rich text...';
 
@@ -127,7 +131,7 @@ interface Props {
 export default function Editor({ fileName }: Props) {
   const editorConfig = {
     namespace: fileName,
-    nodes: [ParagraphNode, TextNode, HeadingNode],
+    nodes: [ParagraphNode, TextNode, HeadingNode, CodeNode, LinkNode],
     theme: Theme,
     html: {
       export: exportMap,
@@ -142,6 +146,7 @@ export default function Editor({ fileName }: Props) {
     <LexicalComposer initialConfig={editorConfig}>
       <div className="editor-container">
         <SyncPlugin fileName={fileName} />
+        <SlashCommandPlugin />
         <ToolbarPlugin />
         <div className="editor-inner">
           <RichTextPlugin
