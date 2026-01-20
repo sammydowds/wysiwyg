@@ -1,5 +1,7 @@
 # WYSIWYG Editor
 
+![Sample Editor](sample.png)
+
 This is my editor to write blog posts and then output them to HTML.
 
 ## Starting local editor
@@ -15,6 +17,8 @@ npm run edit
 ```
 npm run server
 ```
+
+⬇️ Automatically saves your work. 
 
 This will allow you to edit files at `http://localhost:4173/posts/edit/<filename>.html` in the browser. 
 
