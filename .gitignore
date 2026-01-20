@@ -1,6 +1,9 @@
 # Dependencies
 node_modules
 
+# ignore output
+html
+
 # Environment files
 .env
 .env.*
