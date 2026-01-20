@@ -5,6 +5,8 @@ import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html'
 import { $getRoot } from 'lexical'
 import { useDebouncedCallback } from 'use-debounce'
 
+import.meta.env.MODE
+
 interface Props {
   fileName: string
 }
@@ -19,8 +21,11 @@ export const SyncPlugin = ({ fileName }: Props) => {
   const debouncedSave = useDebouncedCallback((editorState) => {
     editorState.read(() => {
       const htmlString = $generateHtmlFromNodes(editor);
-      console.log(htmlString)
-      mutate({ filename: fileName, content: htmlString })
+      if (import.meta.env.PROD) {
+        mutate({ filename: fileName, content: htmlString })
+      } else {
+        console.warn("SKIPPING AUTO-SAVE in DEV mode")
+      }
     });
   }, 1000);
 
