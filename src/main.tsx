@@ -6,7 +6,7 @@
  *
  */
 import './styles.css';
-import './post.css'
+import '../template/post.css'
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
