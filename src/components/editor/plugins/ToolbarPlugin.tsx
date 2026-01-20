@@ -19,7 +19,6 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 function Divider() {
@@ -168,7 +167,7 @@ export default function ToolbarPlugin() {
         className="toolbar-item"
         aria-label="Justify Align">
         <i className="format justify-align" />
-      </button>{' '}
+      </button>
     </div>
   );
 }
