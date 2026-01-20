@@ -8,7 +8,8 @@
     "monorepo:dev": "vite -c vite.config.monorepo.ts",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "server": "node --loader ts-node/esm server.ts"
+    "server": "node --loader ts-node/esm server.ts",
+    "edit": "npm run build && npm run preview"
   },
   "dependencies": {
     "@lexical/html": "^0.39.0",
