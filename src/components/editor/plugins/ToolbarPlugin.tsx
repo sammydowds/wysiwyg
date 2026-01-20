@@ -8,6 +8,7 @@ import {
   COMMAND_PRIORITY_LOW,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
+  ParagraphNode,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
@@ -98,10 +99,20 @@ export default function ToolbarPlugin() {
   const applyHeading = (el: HeadingTagType) => {
     editor.update(() => {
       const selection = $getSelection();
-      if ($isRangeSelection(selection)) {
+      if (!$isRangeSelection(selection)) return;
+
+      const nodes = selection.getNodes();
+      if (nodes.length === 0) return;
+
+      const node = nodes[0];
+      const topLevel = node.getTopLevelElement();
+
+      if ($isHeadingNode(topLevel) && topLevel.getTag() === el) {
+        $setBlocksType(selection, () => new ParagraphNode());
+      } else {
         $setBlocksType(selection, () => $createHeadingNode(el));
       }
-    })
+    });
   };
 
   return (
