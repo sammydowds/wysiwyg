@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { useFile } from '../../../api/html'
+import { useFile, useUpdateFile } from '../../../api/html'
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html'
 import { $getRoot } from 'lexical'
 import { useDebouncedCallback } from 'use-debounce'
@@ -9,18 +9,18 @@ interface Props {
   fileName: string
 }
 
-export const SyncHtmlPlugin = ({ fileName }: Props) => {
+export const SyncPlugin = ({ fileName }: Props) => {
   const [editor] = useLexicalComposerContext()
   const { data: file } = useFile(fileName)
   const { content } = file ?? { content: null }
   const initializedRef = useRef(false)
-  // const { mutate } = useUpdateFile()
+  const { mutate } = useUpdateFile()
 
   const debouncedSave = useDebouncedCallback((editorState) => {
     editorState.read(() => {
       const htmlString = $generateHtmlFromNodes(editor);
       console.log(htmlString)
-      // mutate({ filename: fileName, content: htmlString })
+      mutate({ filename: fileName, content: htmlString })
     });
   }, 1000);
 
@@ -43,8 +43,10 @@ export const SyncHtmlPlugin = ({ fileName }: Props) => {
   useEffect(() => {
     if (!editor) return;
 
-    const unregister = editor.registerUpdateListener(({ editorState }) => {
-      if (initializedRef.current) {
+    const unregister = editor.registerUpdateListener(({ editorState, dirtyElements, dirtyLeaves }) => {
+      if (!initializedRef.current) return;
+      const hasChanges = dirtyElements.size > 0 || dirtyLeaves.size > 0;
+      if (hasChanges) {
         debouncedSave(editorState);
       }
     });

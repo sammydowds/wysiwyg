@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = '/api';
 
 export interface HtmlFile {
   filename: string;

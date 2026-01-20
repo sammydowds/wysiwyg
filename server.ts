@@ -13,8 +13,11 @@ const app = express();
 const PORT = 3000;
 const HTML_DIR = path.join(__dirname, "html");
 
-// NOTE: CORS not enforced
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow only this origin
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 if (!fs.existsSync(HTML_DIR)) {

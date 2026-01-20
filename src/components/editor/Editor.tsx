@@ -17,7 +17,6 @@ import {
   DOMConversionMap,
   DOMExportOutput,
   DOMExportOutputMap,
-  EditorState,
   isHTMLElement,
   Klass,
   LexicalEditor,
@@ -29,7 +28,7 @@ import {
 import Theme from './Theme';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 import { parseAllowedColor, parseAllowedFontSize } from './styleConfig';
-import { SyncHtmlPlugin } from './plugins/SynHtmlPlugin';
+import { SyncPlugin } from './plugins/SyncPlugin';
 
 const placeholder = 'Enter some rich text...';
 
@@ -126,7 +125,7 @@ interface Props {
 
 export default function Editor({ fileName }: Props) {
   const editorConfig = {
-    namespace: 'WSYIWYG',
+    namespace: fileName,
     nodes: [ParagraphNode, TextNode],
     theme: Theme,
     html: {
@@ -141,7 +140,7 @@ export default function Editor({ fileName }: Props) {
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className="editor-container">
-        <SyncHtmlPlugin fileName={fileName} />
+        <SyncPlugin fileName={fileName} />
         <ToolbarPlugin />
         <div className="editor-inner">
           <RichTextPlugin
