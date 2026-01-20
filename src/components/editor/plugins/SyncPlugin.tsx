@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useFile, useUpdateFile } from '../../../api/html'
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html'
@@ -17,12 +17,20 @@ export const SyncPlugin = ({ fileName }: Props) => {
   const { content } = file ?? { content: null }
   const initializedRef = useRef(false)
   const { mutate } = useUpdateFile()
+  const [status, setStatus] = useState("")
 
   const debouncedSave = useDebouncedCallback((editorState) => {
     editorState.read(() => {
       const htmlString = $generateHtmlFromNodes(editor);
       if (import.meta.env.PROD) {
-        mutate({ filename: fileName, content: htmlString })
+        mutate({ filename: fileName, content: htmlString }, {
+          onSuccess: () => {
+            setStatus("Saving")
+            setTimeout(() => {
+              setStatus("")
+            }, 2000)
+          }
+        })
       } else {
         console.warn("SKIPPING AUTO-SAVE in DEV mode")
         console.log(htmlString)
@@ -60,6 +68,16 @@ export const SyncPlugin = ({ fileName }: Props) => {
     return () => unregister();
   }, [editor, debouncedSave]);
 
-  return null;
+  return <div className='relative w-full'>
+    <div className='absolute top-2 right-2 text-xs text-gray-400 flex flex-row gap-1'>
+      {
+        status === "Saving" ? (
+          <>
+            Saving...
+          </>
+        ) : null
+      }
+    </div>
+  </div>;
 }
 

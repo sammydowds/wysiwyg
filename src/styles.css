@@ -454,3 +454,7 @@ i.right-align {
 i.justify-align {
   background-image: url(/icons/justify.svg);
 }
+
+i.synced {
+  background-image: url(/icons/cloud-arrow-up.svg);
+}
