@@ -24,6 +24,7 @@ import {
   ParagraphNode,
   TextNode,
 } from 'lexical';
+import { HeadingNode } from "@lexical/rich-text"
 
 import Theme from './Theme';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
@@ -126,7 +127,7 @@ interface Props {
 export default function Editor({ fileName }: Props) {
   const editorConfig = {
     namespace: fileName,
-    nodes: [ParagraphNode, TextNode],
+    nodes: [ParagraphNode, TextNode, HeadingNode],
     theme: Theme,
     html: {
       export: exportMap,

@@ -25,6 +25,7 @@ export const SyncPlugin = ({ fileName }: Props) => {
         mutate({ filename: fileName, content: htmlString })
       } else {
         console.warn("SKIPPING AUTO-SAVE in DEV mode")
+        console.log(htmlString)
       }
     });
   }, 1000);
