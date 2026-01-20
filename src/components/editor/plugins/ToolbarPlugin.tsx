@@ -45,8 +45,9 @@ export default function ToolbarPlugin() {
       const nodes = selection.getNodes();
       if (nodes.length > 0) {
         const node = nodes[0];
-        if ($isHeadingNode(node)) {
-          const level = node.getTag();
+        const topLevel = node.getTopLevelElement()
+        if ($isHeadingNode(topLevel)) {
+          const level = topLevel.getTag();
           if (level === "h1") setHeading('h1');
           else if (level === "h2") setHeading('h2');
           else if (level === "h3") setHeading('h3');
