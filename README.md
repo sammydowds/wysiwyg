@@ -23,3 +23,7 @@ npm run server
 This will allow you to edit files at `http://localhost:4173/posts/edit/<filename>.html` in the browser. 
 
 This correlates to html files located in `/html`. Files are autosaved to this folder.
+
+### Styling posts
+
+CSS is automatically injected when updating posts from `/template/post.css`. These styles correlate between the editor and post, so when you tweak it you will see it directly in both the editor and post (all posts).
