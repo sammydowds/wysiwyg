@@ -1,6 +1,7 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
+  $getRoot,
   $getSelection,
   $isRangeSelection,
   CAN_REDO_COMMAND,
@@ -34,6 +35,7 @@ export default function ToolbarPlugin() {
   const [isStrikethrough, setIsStrikethrough] = useState(false);
 
   const [heading, setHeading] = useState<'h1' | 'h2' | 'h3' | null>(null);
+  const [charCount, setCharCount] = useState<number | null>(null)
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -60,6 +62,8 @@ export default function ToolbarPlugin() {
         setHeading(null);
       }
     }
+    const text = $getRoot().getTextContent()
+    setCharCount(text.length)
   }, []);
 
   useEffect(() => {
@@ -213,6 +217,8 @@ export default function ToolbarPlugin() {
       >
         <i className="format justify-align" />
       </button>
+      <Divider />
+      <div className='text-xs flex flex-row items-center justify-center px-2 text-gray-500'>{charCount}</div>
     </div>
   );
 }

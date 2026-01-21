@@ -27,3 +27,6 @@ This correlates to html files located in `/html`. Files are autosaved to this fo
 ### Styling posts
 
 CSS is automatically injected when updating posts from `/template/post.css`. These styles correlate between the editor and post, so when you tweak it you will see it directly in both the editor and post (all posts).
+
+### Notes
+- Syncing with files will not happen when in dev mode (`npm run dev`)

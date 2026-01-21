@@ -75,7 +75,7 @@ export function SlashMenu({ query, editor }: Props) {
       {options.map((opt) => (
         <div
           key={opt.label}
-          className={`p-2 cursor-pointer rounded text-gray-600 text-sm m-1 hover:bg-gray-50
+          className={`p-2 cursor-pointer rounded text-sm m-1 hover:bg-gray-50
             }`}
           onClick={() => editor.update(() => opt.action())}
         >
