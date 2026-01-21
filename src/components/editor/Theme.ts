@@ -25,7 +25,7 @@ export default {
     ol: 'editor-list-ol',
     ul: 'editor-list-ul',
   },
-  paragraph: 'editor-paragraph',
+  // paragraph: 'editor-paragraph', NOTE: paragaphs styled in /template/post.css for persistence
   placeholder: 'editor-placeholder',
   quote: 'editor-quote',
   text: {

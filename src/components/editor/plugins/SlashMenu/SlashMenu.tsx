@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { $createTextNode, $getSelection, $isRangeSelection, $isTextNode, LexicalEditor } from 'lexical'
 import { $createCodeNode } from '@lexical/code'
@@ -56,7 +56,6 @@ export function SlashMenu({ query, editor }: Props) {
   ].filter(o =>
     o.label.toLowerCase().includes(query.toLowerCase())
   )
-  const [highlightIndex, setHighlightIndex] = useState(0)
 
   useEffect(() => {
     const selection = window.getSelection()
@@ -67,48 +66,16 @@ export function SlashMenu({ query, editor }: Props) {
 
     if (ref.current) {
       ref.current.style.top = `${rect.bottom - rect.height + 3}px`
-      ref.current.style.left = `${rect.left + 4}px`
+      ref.current.style.left = `${rect.left + 8}px`
     }
   }, [query])
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (!options.length) return
-
-      switch (e.key) {
-        case 'ArrowDown':
-          e.preventDefault()
-          setHighlightIndex(prev => (prev + 1) % options.length)
-          break
-        case 'ArrowUp':
-          e.preventDefault()
-          setHighlightIndex(prev => (prev - 1 + options.length) % options.length)
-          break
-        case 'Enter':
-          break
-        case 'Tab':
-          e.preventDefault()
-          const selected = options[highlightIndex]
-          if (selected) {
-            editor.update(() => selected.action())
-          }
-          break
-        case 'Escape':
-          e.preventDefault()
-          break
-      }
-    }
-
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [highlightIndex, options])
-
   return createPortal(
     <div ref={ref} className="absolute -top-4 left-2 bg-white rounded-sm z-100 border-[1px] border-gray-200 min-w-[200px]">
-      {options.map((opt, idx) => (
+      {options.map((opt) => (
         <div
           key={opt.label}
-          className={`p-2 cursor-pointer rounded text-gray-600 text-sm m-1 hover:bg-gray-50 ${idx === highlightIndex ? 'bg-gray-100 text-blue-900' : ''
+          className={`p-2 cursor-pointer rounded text-gray-600 text-sm m-1 hover:bg-gray-50
             }`}
           onClick={() => editor.update(() => opt.action())}
         >
